@@ -3,7 +3,8 @@
 ### **[ABOUT PROGRAM]** ###
 ---
 **$\textcolor{red}{\text{THIS PROGRAM IS MADE TO DEMONSTRATE THE CURRENT GAME VULNERABILITY}}$**
-**$\textcolor{red}{\text{TO THE GAME DEVELOPERS AND TO DRAFT THEIR ATTENTION TO THE PROBLEM.}}$**
+**$\textcolor{red}{\text{TO THE GAME DEVELOPERS AND TO DRAFT THEIR}}$**
+**$\textcolor{red}{\text{ATTENTION TO THE PROBLEM.}}$**
 ---
 ### This program uses memory replacement using pymem to activate the save world button in multiplayer mode. ###
 ### Next, the program can restore some file structure of the saved world and make changes to scene.xml for further spawning of buildings and their theft. ###
