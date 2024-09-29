@@ -55,9 +55,12 @@ def main(page: ft.Page):
             show_pop_up('Error while saving vehicle: '+str(e), page)
 
             
-    def change_save_folder():
+    def change_save_folder(path_line_ref):
         try:
-            func.change_file(filedialog.askdirectory())
+            new_txt = filedialog.askdirectory()
+            func.rewrite_file(new_txt)
+            path_line_ref.current.value = new_txt
+            page.update()
         except Exception as e:
             show_pop_up('Error while changing save folder: '+str(e), page)
 
@@ -129,7 +132,7 @@ def main(page: ft.Page):
                 content=ft.Text("Change saves folder", size=20, color="#ffffff", font_family="Roboto"),
                 alignment=ft.alignment.center,
                 bgcolor="#212124",
-                on_click= lambda e: change_save_folder(),
+                on_click= lambda e: change_save_folder(path_line_ref),
                 opacity=0.5,
                 border_radius=6,
                 border=ft.border.all(1, "#558bbd"),
@@ -155,9 +158,11 @@ def main(page: ft.Page):
         alignment=ft.alignment.center
     )
 
+    path_line_ref = ft.Ref[ft.TextField]()
+
     path_line = ft.Container(
-        content=ft.Text(
-            "Saves folder: " + func.read_file(), size=15, color="#ffffff", font_family="Roboto"
+        content=ft.Text(ref=path_line_ref,
+            value="Saves folder: " + func.read_file(), size=15, color="#ffffff", font_family="Roboto"
         ),
         bgcolor="#1a1a1a",
         border_radius=10,
