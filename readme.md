@@ -2,8 +2,8 @@
 **Program for saving vehicles from multiplayer server in game [Stormworks](https://store.steampowered.com/app/573090/Stormworks_Build_and_Rescue/).**
 ### **[ABOUT PROGRAM]** ###
 ---
-**$\textcolor{red}{\text{THIS PROGRAM IS MADE TO DEMONSTRATE THE CURRENT GAME VULNERABILITY}}$**
-**$\textcolor{red}{\text{TO THE GAME DEVELOPERS AND TO DRAFT THEIR}}$**
+**$\textcolor{red}{\text{THIS PROGRAM IS MADE TO DEMONSTRATE THE CURRENT GAME}}$**
+**$\textcolor{red}{\text{VULNERABILITY TO THE GAME DEVELOPERS AND TO DRAFT THEIR}}$**
 **$\textcolor{red}{\text{ATTENTION TO THE PROBLEM.}}$**
 ---
 ### This program uses memory replacement using pymem to activate the save world button in multiplayer mode. ###
