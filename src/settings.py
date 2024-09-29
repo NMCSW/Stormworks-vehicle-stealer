@@ -1,7 +1,7 @@
 #Global
 PROCESS_NAME = 'stormworks64.exe'
 
-APP_NAME = 'Stormwroks vehicle stealer'
+APP_NAME = 'Stormworks vehicle stealer'
 
 #Memory offset
 OFFSET = 0x7508AF
