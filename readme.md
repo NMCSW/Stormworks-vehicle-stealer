@@ -7,7 +7,7 @@
 **$\textcolor{red}{\text{ATTENTION TO THE PROBLEM.}}$**
 ---
 ### This program uses memory replacement using pymem to activate the save world button in multiplayer mode. ###
-### Next, the program can restore some file structure of the saved world and make changes to scene.xml for further spawning of buildings and their theft. ###
+### Next, the program can restore some file structure of the saved world and make changes to scene.xml for further spawning of vehicles and their theft. ###
 ---
 ![alt text](img/image5.png)
 
