@@ -2,7 +2,8 @@
 **Program for saving vehicles from multiplayer server in game [Stormworks](https://store.steampowered.com/app/573090/Stormworks_Build_and_Rescue/).**
 ### **[ABOUT PROGRAM]** ###
 ---
-### **$\textcolor{red}{\text{THIS PROGRAM IS MADE TO DEMONSTRATE THE CURRENT VULNERABILITY TO THE GAME DEVELOPERS AND TO DRAFT THEIR ATTENTION TO THE PROBLEM.}}$** ###
+**$\textcolor{red}{\text{THIS PROGRAM IS MADE TO DEMONSTRATE THE CURRENT GAME VULNERABILITY}}$**
+**$\textcolor{red}{\text{TO THE GAME DEVELOPERS AND TO DRAFT THEIR ATTENTION TO THE PROBLEM.}}$**
 ---
 ![alt text](img/image5.png)
 
