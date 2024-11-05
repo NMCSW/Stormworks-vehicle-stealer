@@ -20,8 +20,8 @@ def main(page: ft.Page):
     page.clean()
     page.title = settings.APP_NAME
     page.theme_mode = theme
-    page.window.width = 700
-    page.window.height = 400
+    page.window_width = 700
+    page.window_height = 700
 
 
     def on_hover(e):
@@ -31,9 +31,9 @@ def main(page: ft.Page):
 
 
     def on_resize_window(e):
-        main_frame.height = page.window.height
-        main_frame.width = page.window.width
-        path_line.width = page.window.width*0.8
+        main_frame.height = page.height
+        main_frame.width = page.width
+        path_line.width = page.width*0.8
         page.update()
     page.on_resized = on_resize_window
 
@@ -166,7 +166,7 @@ def main(page: ft.Page):
         ),
         bgcolor="#1a1a1a",
         border_radius=10,
-        width=page.window.width*0.8,
+        width=page.width*0.8,
         alignment=ft.alignment.center,
     )
     
@@ -188,8 +188,8 @@ def main(page: ft.Page):
             ],
         ),
         bgcolor="#212124",
-        width=page.window.width,
-        height=page.window.height,
+        width=page.width,
+        height=page.height,
         alignment=ft.alignment.center
     )
 
