@@ -4,7 +4,7 @@ PROCESS_NAME = 'stormworks64.exe'
 APP_NAME = 'Stormworks vehicle stealer'
 
 #Memory offset
-OFFSET = 0x75131F
+OFFSET = 0x7517BF
 
 #Search pattern
 VEH = '\t<vehicles>\n\t\t<vehicle_data/>\n\t\t<vehicle_group_data/>\n\t</vehicles>'
