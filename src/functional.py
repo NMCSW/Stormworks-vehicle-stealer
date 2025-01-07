@@ -1,14 +1,14 @@
-import pymem, struct
-import settings as settings
 import os
-import math as m
-from shutil import copy, copytree
 from re import sub
-
+from pymem import Pymem
+from math import floor, cos, sin
+from struct import pack, unpack
+from shutil import copy, copytree
+from settings import VEH, PROCESS_NAME, VEH_PATTERN, VEH_DATA_PATTERN, VEH_GROUP_DATA_PATTERN, OFFSET
 
 # Memory functions
 def get_base_address(module_name):
-    process = pymem.Pymem(module_name)
+    process = Pymem(module_name)
     for module in process.list_modules():
         if module.name.lower() == module_name.lower():
             return module.lpBaseOfDll
@@ -25,7 +25,7 @@ def read_bytes_from_address(process, address, size):
 
 def check_process(proc_name):
     try:
-        pymem.Pymem(proc_name)
+        Pymem(proc_name)
         return True
     except:
         return False
@@ -75,16 +75,16 @@ def auto_fill_file():
 
 def calculate_position(i, x, y, z, r=100, count_in_circle=8):
     angle = 360/count_in_circle
-    zo = m.floor(i/8)
-    return m.floor(x+(m.cos(i*angle)*r)), m.floor(y+(m.sin(i*angle)*r)), z+(zo*30)
+    zo = floor(i/8)
+    return floor(x+(cos(i*angle)*r)), floor(y+(sin(i*angle)*r)), z+(zo*30)
     
 
 def patch_save(path):
     vehicle_nums = parse_vehicles(f'{path}\\vehicles')
 
-    veh_pattern = settings.VEH_PATTERN.split("*")
-    veh_data_pattern = settings.VEH_DATA_PATTERN.split("*")
-    veh_group_data_pattern = settings.VEH_GROUP_DATA_PATTERN.split("*")
+    veh_pattern = VEH_PATTERN.split("*")
+    veh_data_pattern = VEH_DATA_PATTERN.split("*")
+    veh_group_data_pattern = VEH_GROUP_DATA_PATTERN.split("*")
 
     veh_data=""
     veh_group_data=""
@@ -109,7 +109,7 @@ def patch_save(path):
     with open(f'{path}\\scene.xml', "a+", encoding="utf-8") as scene:
         scene.seek(0)
         scene_f = scene.read()
-        veh_data_f = sub(rf"{settings.VEH}", result, scene_f)
+        veh_data_f = sub(rf"{VEH}", result, scene_f)
         scene.truncate(0);scene.seek(0)
         scene.write(veh_data_f)
 
@@ -126,18 +126,18 @@ def parse_vehicles(path):
 
 # Main functions
 def steal_vehicle(state):
-    base_addr = get_base_address(settings.PROCESS_NAME)
-    pm = pymem.Pymem(settings.PROCESS_NAME)
+    base_addr = get_base_address(PROCESS_NAME)
+    pm = Pymem(PROCESS_NAME)
     if state:
-        r_data = read_bytes_from_address(pm, base_addr+settings.OFFSET, 4)
-        value = struct.unpack('<I', r_data)[0]
-        w_data = struct.pack('<I', value+1)
-        write_bytes_to_address(pm, base_addr+settings.OFFSET, w_data)
+        r_data = read_bytes_from_address(pm, base_addr+OFFSET, 4)
+        value = unpack('<I', r_data)[0]
+        w_data = pack('<I', value+1)
+        write_bytes_to_address(pm, base_addr+OFFSET, w_data)
     else:
-        r_data = read_bytes_from_address(pm, base_addr+settings.OFFSET, 4)
-        value = struct.unpack('<I', r_data)[0]
-        w_data = struct.pack('<I', value-1)
-        write_bytes_to_address(pm, base_addr+settings.OFFSET, w_data)
+        r_data = read_bytes_from_address(pm, base_addr+OFFSET, 4)
+        value = unpack('<I', r_data)[0]
+        w_data = pack('<I', value-1)
+        write_bytes_to_address(pm, base_addr+OFFSET, w_data)
 
 
 def save_vehicle_from(path):

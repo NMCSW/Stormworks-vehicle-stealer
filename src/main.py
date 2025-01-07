@@ -1,7 +1,8 @@
 import flet as ft
 import functional as func
-import settings as settings
+from settings import PROCESS_NAME, APP_NAME
 from tkinter import filedialog
+
 
 def clamp(x, xmin, xmax):
     return max(min(x, xmax),xmin)
@@ -18,7 +19,7 @@ def show_pop_up(text, page):
 def main(page: ft.Page):
     theme = page.theme_mode
     page.clean()
-    page.title = settings.APP_NAME
+    page.title = APP_NAME
     page.theme_mode = theme
     page.window_width = 700
     page.window_height = 700
@@ -67,7 +68,7 @@ def main(page: ft.Page):
 
     def steal_vehicle(e):
         try:
-            if func.check_process(settings.PROCESS_NAME):
+            if func.check_process(PROCESS_NAME):
                 func.steal_vehicle(e.control.value)
             else:
                 show_pop_up("Game process not found", page)
@@ -154,7 +155,7 @@ def main(page: ft.Page):
 
 
     Top = ft.Container(
-        content=ft.Text(settings.APP_NAME, size=30, weight=ft.FontWeight.BOLD, color="#FFFFFF", font_family="Roboto"),
+        content=ft.Text(APP_NAME, size=30, weight=ft.FontWeight.BOLD, color="#FFFFFF", font_family="Roboto"),
         alignment=ft.alignment.center
     )
 
