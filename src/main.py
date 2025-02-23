@@ -1,14 +1,118 @@
 import flet as ft
 import functional as func
-from settings import PROCESS_NAME, APP_NAME
+from settings import PROCESS_NAME, APP_NAME, ON_VEHICLE_PATTERN, OFF_VEHICLE_PATTERN
 from tkinter import filedialog
 
 
-def clamp(x, xmin, xmax):
-    return max(min(x, xmax),xmin)
+def check_reset(func):
+    def wrapper(self, *args, **kwargs):
+        if self._reset:
+            self._get_process_data()
+        return func(self, *args, **kwargs)
+    return wrapper
 
 
-def show_pop_up(text, page):
+class Offset:
+    def __init__(self, name, pattern, additional_static_offset = 0):
+        self.name = name
+        self.pattern = pattern
+        self.offset = 0
+        self.calculated = False
+        self.additional_static_offset = additional_static_offset
+    
+
+    def calculate_offset(self, Process_State_obj):
+        self.offset = func.search_offset_by_pattern(Process_State_obj.get_process_object(), Process_State_obj.get_process_module(), Process_State_obj.get_base_address(), self.pattern) + self.additional_static_offset
+        self.calculated = True
+
+
+class ProcessState:
+    _instance = None
+
+
+    def __new__(cls, process_name: str = "", module_name: str = ""):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+    
+
+    def __init__(self, process_name: str = "" , module_name: str = ""):
+        if not hasattr(self, "_initialized"):
+            self._reset = False
+            self._process_name = process_name
+            self._module_name = module_name
+            self._get_process_data()
+            self._offsets = {}
+            self._initialized = True
+
+
+    def reset(self):
+        self._reset = True
+
+
+    def _get_process_data(self):
+        try:
+            self._process_module = func.get_process_module(self._process_name, self._module_name)
+            self._process_object = func.get_process_object(self._process_name)
+            self._base_address = func.get_base_address(self._process_module)
+
+            for i in self._offsets.keys():
+                if not self._offsets[i].calculated:
+                    self._offsets[i].calculate_offset(self)
+
+            self._reset = False
+        except Exception as e:
+            self.reset()
+
+
+    def change_process(self, process_name: str, module_name: str):
+        self._process_name = process_name
+        self._module_name = module_name
+        self._get_process_data()
+
+    @check_reset
+    def add_offset(self, offset: Offset):
+        self._offsets[offset.name] = offset
+
+    @check_reset
+    def get_offset(self, offset_name):
+        if self._offsets[offset_name].calculated == False:
+            self._offsets[offset_name].calculate_offset(self)
+        return self._offsets[offset_name]
+    
+    @check_reset    
+    def get_process_name(self):
+        return self._process_name
+    
+    @check_reset
+    def get_process_object(self):
+        return self._process_object
+    
+    @check_reset
+    def get_module_name(self):
+        return self._module_name
+    
+    @check_reset
+    def get_base_address(self):
+        return self._base_address
+    
+    @check_reset
+    def get_process_module(self):
+        return self._process_module
+    
+
+def add_patterns():
+    try:
+        Process_State.add_offset(Offset("vehicle", ON_VEHICLE_PATTERN, 0x4))
+        return True, False
+    except:
+        try:
+            Process_State.add_offset(Offset("vehicle", OFF_VEHICLE_PATTERN, 0x4))
+            return True, True
+        except:
+            return False, False
+
+def show_pop_up(text, page: ft.Page):
     page.snack_bar = ft.SnackBar(ft.Text(f"{text}", size=20, color='#B4B4B4'))
     page.snack_bar.bgcolor = '#44506F'
     page.snack_bar.opacity = 0.2
@@ -17,12 +121,23 @@ def show_pop_up(text, page):
 
 
 def main(page: ft.Page):
+    global Process_State
     theme = page.theme_mode
     page.clean()
     page.title = APP_NAME
     page.theme_mode = theme
     page.window_width = 700
     page.window_height = 700
+    patterns_added, is_off = add_patterns()
+    #Refs:
+    path_line_ref = ft.Ref[ft.TextField]()
+    switch = ft.Ref[ft.Switch]()
+    if is_off:
+        switch.current.value = True
+
+    if not patterns_added:
+        Process_State.reset()
+        show_pop_up("Game process not found", page)
 
 
     def on_hover(e):
@@ -67,16 +182,20 @@ def main(page: ft.Page):
 
 
     def steal_vehicle(e):
+        global Process_State
         try:
             if func.check_process(PROCESS_NAME):
-                func.steal_vehicle(e.control.value)
+                func.steal_vehicle(Process_State.get_process_object(), Process_State.get_base_address(), Process_State.get_offset('vehicle').offset ,e.control.value)
             else:
+                Process_State.reset()
                 show_pop_up("Game process not found", page)
                 e.control.value = False
         except Exception as e:
             show_pop_up('Error while stealing vehicle: '+str(e), page)
 
     # Ui
+
+
     column_1 = ft.Container(
         opacity=1,
         bgcolor="#212124",
@@ -86,6 +205,7 @@ def main(page: ft.Page):
         alignment=ft.alignment.top_center,
         content=ft.Column([
             ft.Switch(
+                ref=switch,
                 label="Open save menu",
                 on_change= steal_vehicle,
                 thumb_color="#585660",
@@ -159,7 +279,6 @@ def main(page: ft.Page):
         alignment=ft.alignment.center
     )
 
-    path_line_ref = ft.Ref[ft.TextField]()
 
     path_line = ft.Container(
         content=ft.Text(ref=path_line_ref,
@@ -198,8 +317,10 @@ def main(page: ft.Page):
     page.add(main_frame)
     page.update()
 
+
 if __name__ == "__main__":
     func.create_directory()
     func.auto_fill_file()
     func.read_file()
+    Process_State = ProcessState(process_name=PROCESS_NAME,module_name=PROCESS_NAME)
     ft.app(target=main)

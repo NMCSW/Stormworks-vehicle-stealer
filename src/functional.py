@@ -1,35 +1,50 @@
 import os
 from re import sub
-from pymem import Pymem
+from pymem import Pymem, pymem
 from math import floor, cos, sin
 from struct import pack, unpack
 from shutil import copy, copytree
-from settings import VEH, PROCESS_NAME, VEH_PATTERN, VEH_DATA_PATTERN, VEH_GROUP_DATA_PATTERN, OFFSET
+from settings import VEH, VEH_PATTERN, VEH_DATA_PATTERN, VEH_GROUP_DATA_PATTERN
 
 # Memory functions
-def get_base_address(module_name):
-    process = Pymem(module_name)
-    for module in process.list_modules():
-        if module.name.lower() == module_name.lower():
-            return module.lpBaseOfDll
-    raise ValueError(f"Module {module_name} not found in the process.")
+def get_process_object(process_name):
+    return Pymem(process_name)
 
 
-def write_bytes_to_address(process, address, data):
-    process.write_bytes(address, data, len(data))
+def get_process_module(process_name, module_name):
+    process_object = get_process_object(process_name)
+    return pymem.process.module_from_name(process_object.process_handle, module_name)
 
 
-def read_bytes_from_address(process, address, size):
-    return process.read_bytes(address, size)
+def get_base_address(process_module):
+    return process_module.lpBaseOfDll
 
 
-def check_process(proc_name):
+def search_offset_by_pattern(process_object, process_module, base_address, pattern):
+    memory = read_bytes_from_address(process_object, process_module.lpBaseOfDll, process_module.SizeOfImage)
+    index = memory.find(pattern)
+    if index != -1:
+        address = process_module.lpBaseOfDll + index
+        offset = address - base_address
+        return offset
+    else:
+        raise ValueError("Pattern not found")
+
+
+def write_bytes_to_address(process_object, address, data):
+    process_object.write_bytes(address, data, len(data))
+
+
+def read_bytes_from_address(process_object, address, size):
+    return process_object.read_bytes(address, size)
+
+
+def check_process(process_name):
     try:
-        Pymem(proc_name)
+        Pymem(process_name)
         return True
     except:
         return False
-
 
 # File system functions
 def directory_exists(path):
@@ -125,19 +140,17 @@ def parse_vehicles(path):
 
 
 # Main functions
-def steal_vehicle(state):
-    base_addr = get_base_address(PROCESS_NAME)
-    pm = Pymem(PROCESS_NAME)
+def steal_vehicle(process_object, base_address, offset, state):
     if state:
-        r_data = read_bytes_from_address(pm, base_addr+OFFSET, 4)
+        r_data = read_bytes_from_address(process_object, base_address+offset, 4)
         value = unpack('<I', r_data)[0]
         w_data = pack('<I', value+1)
-        write_bytes_to_address(pm, base_addr+OFFSET, w_data)
+        write_bytes_to_address(process_object, base_address+offset, w_data)
     else:
-        r_data = read_bytes_from_address(pm, base_addr+OFFSET, 4)
+        r_data = read_bytes_from_address(process_object, base_address+offset, 4)
         value = unpack('<I', r_data)[0]
         w_data = pack('<I', value-1)
-        write_bytes_to_address(pm, base_addr+OFFSET, w_data)
+        write_bytes_to_address(process_object, base_address+offset, w_data)
 
 
 def save_vehicle_from(path):
