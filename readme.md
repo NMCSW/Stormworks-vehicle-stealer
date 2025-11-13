@@ -17,7 +17,7 @@ Basically, our vehicles were stolen; this script was like some kind of revenge.
 ### Why such a slow response?
 
 - Not all people are cheaters.
-- Half of the players play with workshop buildings, and the rest build "boring" vehicles.
+- Half of the players play with workshop vehicles, and the rest build "boring" vehicles.
 - The main victims were small RP clans with high-quality vehicles, who didn't worry about their vehicles during the RP downtime because they didn't spawn them on RP servers.
 - As a fourth reason, I can point to the developers with their very important crab updates.
 
