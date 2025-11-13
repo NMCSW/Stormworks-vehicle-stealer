@@ -1,46 +1,30 @@
 # [Stormworks vehicle stealer]
-**Program for saving vehicles from multiplayer server in game [Stormworks](https://store.steampowered.com/app/573090/Stormworks_Build_and_Rescue/).**
-### **[ABOUT PROGRAM]** ###
----
-**$\textcolor{red}{\text{THIS PROGRAM IS MADE TO DEMONSTRATE THE CURRENT GAME}}$**
-**$\textcolor{red}{\text{VULNERABILITY TO THE GAME DEVELOPERS AND TO DRAFT THEIR}}$**
-**$\textcolor{red}{\text{ATTENTION TO THE PROBLEM.}}$**
----
-### This program uses memory replacement using pymem to activate the save world button in multiplayer mode. ###
-### Next, the program can restore some file structure of the saved world and make changes to scene.xml for further spawning of vehicles and their theft. ###
----
-![alt text](img/image5.png)
 
-### **[ Options ]**
+### **MY CONGRATS, THEY WANT TO FIX THE ISSUE** 
 
-This program makes a new save with vehicles that spawned above the start Island in coordinates 0, 0.
+###
 
-<ul>
-<li><h3>1. ''Open save menu'' switch button.</h3> - This button switch the save menu.</li>
-</ul>
+![alt text](img/congrats.jpg)
 
-![alt text](img/image.png)
+### Link to report: https://geometa.co.uk/support/stormworks/28709
 
-<ul>
-<li><h3>1. ''Save vehicle from last save'' button.</h3> - This button makes world with spawned vehicles from last saved world (<b>The last world must be saved by this program</b>).</li>
-</ul>
+### Why was this so important to NMC?
 
-![alt text](img/image2.png)
+- The first such scripts were created by lolqd (Now asico), after which they spread to our RP.
+Basically, our buildings were being hacked; this script was like some kind of revenge.
+- We made the script public, so those who wanted to buy a private cheat disappeared.
 
-<ul>
-<li><h3>1. ''Save vehicle from selected save'' button.</h3> - This button makes world with spawned vehicles from selected world (<b>The selected world must be saved by this program</b>).</li>
-</ul>
+### Why such a slow response?
 
-![alt text](img/image3.png)
+- Not all people are cheaters.
+- Half of the players play with workshop buildings, and the rest build "boring" buildings.
+- The main victims were small RP clans with high-quality buildings, who didn't worry about their vehicles during the RP downtime because they didn't spawn them on RP servers.
+- As a fourth reason, I can point to the developers with their very important crab updates.
 
-<ul>
-<li><h3>1. ''Change saves folder'' button.</h3> - This button Change saves folder of Stormworks (<b>This folder is detected automatically</b> you can see it in "Saves folder" field).</li>
-</ul>
+### P.S.
 
-![alt text](img/image4.png)
+Unfortunately, the community and developers took a very long time to respond to this vulnerability, especially since I literally pointed it out (no one cared).
 
-### **[WARNING]** ###
-This program can create additional file and directory (```Roaming\xml_stealer\xml_stealer.cfg```).
+I want to apologize to all players (not counting some people from DRD) for the stolen vehicles. I finally don't have to worry about refactoring THIS anymore. This is likely the last commit in this repository.
 
-### P.S. ###
-<p>A possible solution to the problem for developers, in my opinion, is to remove the ability to save the world in multiplayer programmatically.</p>
+I must warn you right away that players like (lolqd/asico misdeveloped) will continue to steal vehicles and search for vulnerabilities in the game in this area.
