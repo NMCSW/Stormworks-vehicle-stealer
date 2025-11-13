@@ -11,14 +11,14 @@
 ### Why was this so important to NMC?
 
 - The first such scripts were created by lolqd (Now asico), after which they spread to our RP.
-Basically, our buildings were being hacked; this script was like some kind of revenge.
+Basically, our vehicles were stolen; this script was like some kind of revenge.
 - We made the script public, so those who wanted to buy a private cheat disappeared.
 
 ### Why such a slow response?
 
 - Not all people are cheaters.
-- Half of the players play with workshop buildings, and the rest build "boring" buildings.
-- The main victims were small RP clans with high-quality buildings, who didn't worry about their vehicles during the RP downtime because they didn't spawn them on RP servers.
+- Half of the players play with workshop buildings, and the rest build "boring" vehicles.
+- The main victims were small RP clans with high-quality vehicles, who didn't worry about their vehicles during the RP downtime because they didn't spawn them on RP servers.
 - As a fourth reason, I can point to the developers with their very important crab updates.
 
 ### P.S.
