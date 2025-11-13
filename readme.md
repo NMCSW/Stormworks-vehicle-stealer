@@ -29,5 +29,5 @@ I want to apologize to all players (not counting some people from DRD) for the s
 
 I must warn you right away that players like (lolqd/asico misdeveloped) will continue to steal vehicles and search for vulnerabilities in the game in this area.
 
-Contact me on Discord: https://discord.com/users/1290200905639006209
-Or find "nmcsw"
+### Contact me on Discord: https://discord.com/users/1290200905639006209
+### Or find "nmcsw"
