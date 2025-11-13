@@ -28,3 +28,6 @@ Unfortunately, the community and developers took a very long time to respond to 
 I want to apologize to all players (not counting some people from DRD) for the stolen vehicles. I finally don't have to worry about refactoring THIS anymore. This is likely the last commit in this repository.
 
 I must warn you right away that players like (lolqd/asico misdeveloped) will continue to steal vehicles and search for vulnerabilities in the game in this area.
+
+Contact me on Discord: https://discord.com/users/1290200905639006209
+Or find "nmcsw"
